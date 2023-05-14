@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Emoji Art Maker - Automatic Emoji Mosaics</title>
+   <meta name="description" content="A utility that makes emoji mosaics from any image.">
+  <meta name="keywords" content="emoji, emoticon, mosaic, mosaics, unicode">
+  <meta name="author" content="Scott Weaver">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Emoji Art Maker - Automatic Emoji Mosaics</title><link rel="stylesheet" href="./style.css">
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+ <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/inter-ui@3.11.0/inter.min.css'>
+
+</head>
+<body onload="loaded()">
+  <audio id="myAudio" src="/Theme.mp3" autoplay preload="auto"></audio>
+  <div class="audio-controls">
+    <!-- <button class="play-btn" onclick="playAudio()">.</button>
+    <button class="pause-btn" onclick="pauseAudio()">.</button>
+    <input class="volume-slider" type="range" min="0" max="1" step="0.01" value="0.1" oninput="setVolume()"/> -->
+  </div>
+  <script>
+    var audio = document.getElementById("myAudio");
+  
+    function playAudio() {
+      audio.play();
+    }
+  
+    // function pauseAudio() {
+    //   audio.pause();
+    // }
+  
+    // function setVolume() {
+    //   audio.volume = document.querySelector(".volume-slider").value;
+    // }
+  
+    // Start playing the music when the page loads
+    window.addEventListener('load', function() {
+      audio.volume = 0.05
+      var lastPosition = localStorage.getItem('audioPosition');
+      if (lastPosition) {
+        audio.currentTime = lastPosition;
+      }
+      playAudio();
+    });
+  
+    // Remember the current position of the audio player in local storage
+    setInterval(function() {
+      audio.play();
+      localStorage.setItem('audioPosition', audio.currentTime);
+    }, 1000); // save every second
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="/loader.css">
+  <script src="/loader.js"></script>
+  <loader-component></loader-component>
+  <div class="animate-bottom" id="content">
+
+    
+
+  <a href="/index.html" class="button">
+		<svg height="24" width="24" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024"><path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path></svg>
+		<span>Back</span>
+	  </a>
+<!-- partial:index.partial.html -->
+<div id="controls">
+  <div style="text-align:center;margin:0px;padding:0px;">
+    <h1><img alt="Emoji Art Maker" id="banner" src="https://assets.codepen.io/1197275/EmojiBanner1.png" /></h1>
+  </div>
+  <input  type="file" name="image" id="image"><div id="spinner"></div>
+  <div class="container">
+    <label title="Smaller window = higher resolution, more emojis, slower" for="pSize">Analysis Window:</label>
+    <input class="input" oninput="pSizeInfo.innerText=this.value+'px'" type="range" step="1" min="1" max="50" value="7" id="pSize">
+    <label class="infoLabel" id="pSizeInfo">7px</label>
+  </div>
+  
+  <div class="container">
+    <label for="scale" title="Controls the size of each emoji in the output image. (if you go too high here with lots of emojis, you may exceed max canvas size)">Output emoji size:</label>
+    <input class="input" oninput="scaleInfo.innerText=this.value+'px'" type="range" min="1" step="1" max="50" value="12" id="scale">
+    <label class="infoLabel" id="scaleInfo">12px</label>
+  </div>
+  
+  <div id="c1" class="container">
+    <label for="tolerance" title="Low tolerance = more accurate color, less variety of emojis">Match Tolerance:</label>
+    <input class="input" oninput="toleranceInfo.innerText=this.value" type="range" min="1" step="1" max="30" value="8" id="tolerance">
+    <label class="infoLabel" id="toleranceInfo">8</label>
+  </div>
+  
+  <div class="container" style="display:none">
+        <label for="fillColor" title="Controls 'empty space' fill color when analyzing emojis and effects brightness of result">Emoji Fill Color (black to white):</label><input type="color" value="#888888" id="fillColor">
+  </div>
+  
+   <div class="container">
+        <label for="emptySpace" title="Controls allowed amount of empty space inside emojis. (consider: ❗ and 🟥 are both red)">Allowed Empty Space: </label>
+     <input class="input" oninput="emptySpaceInfo.innerText=(this.value*100).toFixed(0)+'%'" type="range" min=".4" step=".02" max="1" value=".7" id="emptySpace">
+     <label class="infoLabel" id="emptySpaceInfo">70%</label>
+  </div>
+  
+    <div class="container" style="margin-top: 20px; margin-bottom: 40px;">
+      <label class="checkbox">
+        <input type="checkbox" checked id="enableBgColor">
+        <div class="checkmark"></div>
+      </label>
+        <label for="bgColor" title="">Bg Color:</label><input type="color" id="bgColor">
+  </div>
+
+  <div class="container" style="margin-top: 20px; margin-bottom: 20px;">
+    <label for="display">Display mode:</label>
+    <select id="display">     
+      <option selected value="grid">Grid</option>      
+      <option value="mosaic">Mosaic</option> 
+      <option value="chart">Chart</option>   
+    </select>
+  </div>
+  
+  <div class="container" style="margin-top: 20px; margin-bottom: 20px;">
+    <label for="hideBlack">Hide Black/Transparent</label><input type="checkbox" id="hideBlack">
+  </div>
+
+  <div onclick="main()" class="btn-conteiner">
+    <a class="btn-content" href="#">
+      <span class="btn-title">Start</span>
+      <span class="icon-arrow">
+        <svg width="66px" height="43px" viewBox="0 0 66 43" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+          <g id="arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <path id="arrow-icon-one" d="M40.1543933,3.89485454 L43.9763149,0.139296592 C44.1708311,-0.0518420739 44.4826329,-0.0518571125 44.6771675,0.139262789 L65.6916134,20.7848311 C66.0855801,21.1718824 66.0911863,21.8050225 65.704135,22.1989893 C65.7000188,22.2031791 65.6958657,22.2073326 65.6916762,22.2114492 L44.677098,42.8607841 C44.4825957,43.0519059 44.1708242,43.0519358 43.9762853,42.8608513 L40.1545186,39.1069479 C39.9575152,38.9134427 39.9546793,38.5968729 40.1481845,38.3998695 C40.1502893,38.3977268 40.1524132,38.395603 40.1545562,38.3934985 L56.9937789,21.8567812 C57.1908028,21.6632968 57.193672,21.3467273 57.0001876,21.1497035 C56.9980647,21.1475418 56.9959223,21.1453995 56.9937605,21.1432767 L40.1545208,4.60825197 C39.9574869,4.41477773 39.9546013,4.09820839 40.1480756,3.90117456 C40.1501626,3.89904911 40.1522686,3.89694235 40.1543933,3.89485454 Z" fill="#FFFFFF"></path>
+            <path id="arrow-icon-two" d="M20.1543933,3.89485454 L23.9763149,0.139296592 C24.1708311,-0.0518420739 24.4826329,-0.0518571125 24.6771675,0.139262789 L45.6916134,20.7848311 C46.0855801,21.1718824 46.0911863,21.8050225 45.704135,22.1989893 C45.7000188,22.2031791 45.6958657,22.2073326 45.6916762,22.2114492 L24.677098,42.8607841 C24.4825957,43.0519059 24.1708242,43.0519358 23.9762853,42.8608513 L20.1545186,39.1069479 C19.9575152,38.9134427 19.9546793,38.5968729 20.1481845,38.3998695 C20.1502893,38.3977268 20.1524132,38.395603 20.1545562,38.3934985 L36.9937789,21.8567812 C37.1908028,21.6632968 37.193672,21.3467273 37.0001876,21.1497035 C36.9980647,21.1475418 36.9959223,21.1453995 36.9937605,21.1432767 L20.1545208,4.60825197 C19.9574869,4.41477773 19.9546013,4.09820839 20.1480756,3.90117456 C20.1501626,3.89904911 20.1522686,3.89694235 20.1543933,3.89485454 Z" fill="#FFFFFF"></path>
+            <path id="arrow-icon-three" d="M0.154393339,3.89485454 L3.97631488,0.139296592 C4.17083111,-0.0518420739 4.48263286,-0.0518571125 4.67716753,0.139262789 L25.6916134,20.7848311 C26.0855801,21.1718824 26.0911863,21.8050225 25.704135,22.1989893 C25.7000188,22.2031791 25.6958657,22.2073326 25.6916762,22.2114492 L4.67709797,42.8607841 C4.48259567,43.0519059 4.17082418,43.0519358 3.97628526,42.8608513 L0.154518591,39.1069479 C-0.0424848215,38.9134427 -0.0453206733,38.5968729 0.148184538,38.3998695 C0.150289256,38.3977268 0.152413239,38.395603 0.154556228,38.3934985 L16.9937789,21.8567812 C17.1908028,21.6632968 17.193672,21.3467273 17.0001876,21.1497035 C16.9980647,21.1475418 16.9959223,21.1453995 16.9937605,21.1432767 L0.15452076,4.60825197 C-0.0425130651,4.41477773 -0.0453986756,4.09820839 0.148075568,3.90117456 C0.150162624,3.89904911 0.152268631,3.89694235 0.154393339,3.89485454 Z" fill="#FFFFFF"></path>
+          </g>
+        </svg>
+      </span> 
+    </a>
+  </div>
+
+  <button onclick="downloadIt()" class="truck-button">
+    <span class="default">Download Render</span>
+    <span class="success">
+        Download Done!
+        <svg viewbox="0 0 12 10">
+            <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+        </svg>
+    </span>
+    <div class="truck">
+        <div class="wheel"></div>
+        <div class="back"></div>
+        <div class="front"></div>
+        <div class="box"></div>
+    </div>
+</button>
+</div>
+
+<canvas id="result"></canvas>
+
+<script src='https://cdn.jsdelivr.net/npm/gsap@3.0.1/dist/gsap.min.js'></script>
+  <script  src="./script.js"></script>
+</div>
+</body>
+</html>

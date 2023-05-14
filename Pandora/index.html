@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>BrookX3.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+  <audio id="myAudio" src="/Theme.mp3" autoplay preload="auto"></audio>
+  <div class="audio-controls">
+    <!-- <button class="play-btn" onclick="playAudio()">.</button>
+    <button class="pause-btn" onclick="pauseAudio()">.</button>
+    <input class="volume-slider" type="range" min="0" max="1" step="0.01" value="0.1" oninput="setVolume()"/> -->
+  </div>
+  <script>
+    var audio = document.getElementById("myAudio");
+
+    function playAudio() {
+      audio.play();
+    }
+
+    // function pauseAudio() {
+    //   audio.pause();
+    // }
+
+    // function setVolume() {
+    //   audio.volume = document.querySelector(".volume-slider").value;
+    // }
+
+    // Start playing the music when the page loads
+    window.addEventListener('load', function () {
+      audio.volume = 0
+      var lastPosition = localStorage.getItem('audioPosition');
+      if (lastPosition) {
+        audio.currentTime = lastPosition;
+      }
+      playAudio();
+    });
+
+    // Remember the current position of the audio player in local storage
+    setInterval(function () {
+      audio.play();
+      localStorage.setItem('audioPosition', audio.currentTime);
+    }, 1000); // save every second
+
+    function handleOnClick() {
+      let passwordroot = document.getElementById('password-component');
+      passwordroot.classList.toggle("show")
+    };
+
+
+    // Make the DIV element draggable:
+    dragElement(document.getElementById("password-component"));
+
+    function dragElement(elmnt) {
+      var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+      if (document.getElementById(elmnt)) {
+        // if present, the header is where you move the DIV from:
+        document.getElementById(elmnt).onmousedown = dragMouseDown;
+      } else {
+        // otherwise, move the DIV from anywhere inside the DIV:
+        elmnt.onmousedown = dragMouseDown;
+      }
+
+      function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+      }
+
+      function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+      }
+
+      function closeDragElement() {
+        // stop moving when mouse button is released:
+        document.onmouseup = null;
+        document.onmousemove = null;
+      }
+    }
+
+  </script>
+
+  <div id="password-component" class="hide">
+    <div onclick="handleOnClick()" id="close-btn" class="close-btn"></div>
+
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Montserrat&amp;display=swap'>
+    <link rel="stylesheet" href="/dist/random-password/style.css">
+    <div class="animate-bottom" id="content">
+
+      <div class="password-container">
+        <h2 class="title">Password Generator</h2>
+        <div class="result">
+          <div class="result__title field-title">Generated Password</div>
+          <div class="result__info right">click to copy</div>
+          <div class="result__info left">copied</div>
+          <div class="result__viewbox" id="result">CLICK GENERATE</div>
+          <button id="copy-btn" style="--x: 0; --y: 0"><i class="far fa-copy"></i></button>
+        </div>
+        <div class="length range__slider" data-min="4" data-max="32">
+          <div class="length__title field-title" data-length='0'>length:</div>
+          <input id="slider" type="range" min="4" max="32" value="16" />
+        </div>
+
+        <div class="settings">
+          <span class="settings__title field-title">settings</span>
+          <div class="setting">
+            <input type="checkbox" id="uppercase" checked />
+            <label for="uppercase">Include Uppercase</label>
+          </div>
+          <div class="setting">
+            <input type="checkbox" id="lowercase" checked />
+            <label for="lowercase">Include Lowercase</label>
+          </div>
+          <div class="setting">
+            <input type="checkbox" id="number" checked />
+            <label for="number">Include Numbers</label>
+          </div>
+          <div class="setting">
+            <input type="checkbox" id="symbol" />
+            <label for="symbol">Include Symbols</label>
+          </div>
+        </div>
+
+        <button class="btn generate" id="generate">Generate Password</button>
+      </div>
+    </div>
+    <script src="/dist/random-password/script.js"></script>
+  </div>
+
+  <div id="root"></div>
+  <!-- partial -->
+  <script src='https://unpkg.com/react@17/umd/react.development.js'></script>
+  <script src='https://unpkg.com/react-dom@17/umd/react-dom.development.js'></script>
+  <script src='https://unpkg.com/browse/@types/react@16.4.14/index.d.ts'></script>
+  <script src='https://unpkg.com/browse/@types/react-dom@17.0.2/index.d.ts'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/classnames/2.3.1/index.min.js'></script>
+  <script src='https://codepen.io/Hyperplexed/pen/xxYJYjM/54407644e24173ad6019b766443bf2a6.js'></script>
+  <script src="./script.js"></script>
+
+</body>
+
+</html>

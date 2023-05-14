@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app-pin-wrapper">
+    <input disabled id="app-pin-hidden-input" maxlength="6" type="number">
+    <div id="app-pin">
+      <div class="app-pin-digit"></div>
+      <div class="app-pin-digit"></div>
+      <div class="app-pin-digit"></div>
+      <div class="app-pin-digit"></div>
+      <div class="app-pin-digit"></div>
+      <div class="app-pin-digit"></div>
+    </div>
+    <h3 id="app-pin-label">Enter PIN (140507)</h3>
+  </div>
+
+  <div id="info" class="info">
+    <span id="time" class="time"></span>
+    <span class="weather">
+      <i id="weather-type" class="fa-duotone fa-sun"></i>
+      <span id="weather-temperature-value" class="weather-temperature-value"></span>
+      <span class="weather-temperature-unit">°F</span>
+    </span>
+  </div>
+
+  <div id="tools-section" class="menu-section">
+    <div class="menu-section-title">
+      <i class="fa-solid fa-toolbox"></i>
+      <span class="menu-section-title-text">Our Products:</span>
+    </div>
+    <div class="menu-section-content">
+      <div class="tool-card">
+        <div class="tool-card-background background-image"></div>
+        <div class="tool-card-content">
+          <div class="tool-card-content-header">
+            <span class="tool-card-label"></span>
+            <span class="tool-card-name"></span>
+          </div>
+          <i class="tool-card-icon"></i>
+        </div>
+      </div>
+      <!-- Add more tool cards here -->
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
