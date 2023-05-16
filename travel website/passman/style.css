@@ -1,0 +1,21 @@
+body {
+    background:#000;
+    color:#fff;
+    font-family:Arial;
+    
+  }
+  
+  button{
+    padding:10px ;
+    background:#fff;
+    font-weight:600;
+    border-radius:15px;
+  }
+  button:hover{
+    transition:all ease .250s;
+    scale:.9;
+    padding:10px ;
+    background:#ddd;
+    font-weight:600;
+    border-radius:15px;
+  }

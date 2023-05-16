@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Task List</title>
+</head>
+
+<body>
+    <h1>Task List</h1>
+
+    <label for="user-select">Select user:</label>
+    <select id="user-select">
+        <option value="user1">User 1</option>
+        <option value="user2">User 2</option>
+        <option value="user3">User 3</option>
+    </select>
+
+    <br><br>
+
+    <label for="task-input">Add task:</label>
+    <input type="text" id="task-input">
+    <button id="add-task-button">Add</button>
+
+    <br><br>
+
+    <ul id="task-list"></ul>
+
+    <!-- Firebase configuration -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-database.js"></script>
+
+    <!-- Your web app's Firebase configuration -->
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyCN4KB82aEF-f1jQsu_41Os_QcMH9EAqhA",
+            authDomain: "brookx3-73468.firebaseapp.com",
+            databaseURL: "https://brookx3-73468-default-rtdb.firebaseio.com",
+            projectId: "brookx3-73468",
+            storageBucket: "brookx3-73468.appspot.com",
+            messagingSenderId: "1004382599882",
+            appId: "1:1004382599882:web:ddc82414810326d2855233"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Get a reference to the tasks in the database
+        var tasksRef = firebase.database().ref('tasks');
+
+        // Get references to the HTML elements
+        var userSelect = document.getElementById('user-select');
+        var taskInput = document.getElementById('task-input');
+        var addTaskButton = document.getElementById('add-task-button');
+        var taskList = document.getElementById('task-list');
+
+        // Function to display the tasks for the selected user
+        function displayTasks() {
+            // Clear the task list
+            taskList.innerHTML = '';
+
+            // Get the selected user's tasks from the database
+            var userId = userSelect.value;
+            tasksRef.child(userId).on('child_added', function (snapshot) {
+                // Get the task object and its key
+                var task = snapshot.val();
+                var taskId = snapshot.key;
+
+                // Create an HTML element for the task
+                var li = document.createElement('li');
+                li.textContent = task.name;
+
+                // Append the task element to the task list
+                taskList.appendChild(li);
+            });
+        }
+
+        // Call the displayTasks function on page load to show the tasks for the default selected user
+        displayTasks();
+
+        // Add an event listener to the add task button
+        addTaskButton.addEventListener('click', function () {
+            var userId = userSelect.value;
+            var taskName = taskInput.value;
+
+            if (taskName.trim() !== '') {
+                // Create a new task object
+                var newTaskRef = tasksRef.child(userId).push();
+                var newTask = {
+                    name: taskName
+                };
+                    // Save the new task to the database
+    newTaskRef.set(newTask);
+
+// Clear the task input field
+taskInput.value = '';
+
+// Refresh the task list
+displayTasks();
+}
+});
+</script>
+</body>
+</html>

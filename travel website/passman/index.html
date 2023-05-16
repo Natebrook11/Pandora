@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Password Manager</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Password Manager</h1>
+      <form id="password-form">
+        <label for="app-name">App Name:</label>
+        <input type="text" id="app-name" name="app-name" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Save Password</button>
+      </form>
+      <form id="search-form">
+        <label for="search">Search:</label>
+        <input type="text" id="search" name="search">
+        <button type="submit">Search</button>
+      </form>
+      <div id="password-list"></div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

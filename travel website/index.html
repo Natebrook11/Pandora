@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>complete responsive travel website design tutorial</title>
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+    <!-- custom js file link  -->
+    <script src="js/script.js" defer></script>
+
+</head>
+<body>
+
+    <div id="app" class="app" draggable="true">
+        <style>/* Import Google Font - Poppins */
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+      ::selection{
+        color: #fff;
+        background: #3C87FF;
+      }
+      .wrapper{
+        max-width: 405px;
+        padding: 28px 0 30px;
+        margin: 137px auto;
+        background: #fff;
+        border-radius: 7px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      }
+      .task-input{
+        height: 52px;
+        padding: 0 25px;
+        position: relative;
+      }
+      .task-input img{
+        top: 50%;
+        position: absolute;
+        transform: translate(17px, -50%);
+      }
+      .task-input input{
+        height: 100%;
+        width: 100%;
+        outline: none;
+        font-size: 18px;
+        border-radius: 5px;
+        padding: 0 20px 0 53px;
+        border: 1px solid #999;
+      }
+      .task-input input:focus,
+      .task-input input.active{
+        padding-left: 52px;
+        border: 2px solid #3C87FF;
+      }
+      .task-input input::placeholder{
+        color: #bfbfbf;
+      }
+      .controls, li{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .controls{
+        padding: 18px 25px;
+        border-bottom: 1px solid #ccc;
+      }
+      .filters span{
+        margin: 0 8px;
+        font-size: 17px;
+        color: #444444;
+        cursor: pointer;
+      }
+      .filters span:first-child{
+        margin-left: 0;
+      }
+      .filters span.active{
+        color: #3C87FF;
+      }
+      .controls .clear-btn{
+        border: none;
+        opacity: 0.6;
+        outline: none;
+        color: #fff;
+        cursor: pointer;
+        font-size: 13px;
+        padding: 7px 13px;
+        border-radius: 4px;
+        letter-spacing: 0.3px;
+        pointer-events: none;
+        transition: transform 0.25s ease;
+        background: linear-gradient(135deg, #1798fb 0%, #2D5CFE 100%);
+      }
+      .clear-btn.active{
+        opacity: 0.9;
+        pointer-events: auto;
+      }
+      .clear-btn:active{
+        transform: scale(0.93);
+      }
+      .task-box{
+        margin-top: 20px;
+        margin-right: 5px;
+        padding: 0 20px 10px 25px;
+      }
+      .task-box.overflow{
+        overflow-y: auto;
+        max-height: 300px;
+      }
+      .task-box::-webkit-scrollbar{
+        width: 5px;
+      }
+      .task-box::-webkit-scrollbar-track{
+        background: #f1f1f1;
+        border-radius: 25px;
+      }
+      .task-box::-webkit-scrollbar-thumb{
+        background: #e6e6e6;
+        border-radius: 25px;
+      }
+      .task-box .task{
+        list-style: none;
+        font-size: 17px;
+        margin-bottom: 18px;
+        padding-bottom: 16px;
+        align-items: flex-start;
+        border-bottom: 1px solid #ccc;
+      }
+      .task-box .task:last-child{
+        margin-bottom: 0;
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+      .task-box .task label{
+        display: flex;
+        align-items: flex-start;
+      }
+      .task label input{
+        margin-top: 7px;
+        accent-color: #3C87FF;
+      }
+      .task label p{
+        user-select: none;
+        margin-left: 12px;
+        word-wrap: break-word;
+      }
+      .task label p.checked{
+        text-decoration: line-through;
+      }
+      .task-box .settings{
+        position: relative;
+      }
+      .settings :where(i, li){
+        cursor: pointer;
+      }
+      .settings .task-menu{
+        z-index: 10;
+        right: -5px;
+        bottom: -65px;
+        padding: 5px 0;
+        background: #fff;
+        position: absolute;
+        border-radius: 4px;
+        transform: scale(0);
+        transform-origin: top right;
+        box-shadow: 0 0 6px rgba(0,0,0,0.15);
+        transition: transform 0.2s ease;
+      }
+      .task-box .task:last-child .task-menu{
+        bottom: 0;
+        transform-origin: bottom right;
+      }
+      .task-box .task:first-child .task-menu{
+        bottom: -65px;
+        transform-origin: top right;
+      }
+      .task-menu.show{
+        transform: scale(1);
+      }
+      .task-menu li{
+        height: 25px;
+        font-size: 16px;
+        margin-bottom: 2px;
+        padding: 17px 15px;
+        cursor: pointer;
+        justify-content: flex-start;
+      }
+      .task-menu li:last-child{
+        margin-bottom: 0;
+      }
+      .settings li:hover{
+        background: #f5f5f5;
+      }
+      .settings li i{
+        padding-right: 8px;
+      }
+      
+      @media (max-width: 400px) {
+        body{
+          padding: 0 10px;
+        }
+        .wrapper {
+          padding: 20px 0;
+        }
+        .filters span{
+          margin: 0 5px;
+        }
+        .task-input{
+          padding: 0 20px;
+        }
+        .controls{
+          padding: 18px 20px;
+        }
+        .task-box{
+          margin-top: 20px;
+          margin-right: 5px;
+          padding: 0 15px 10px 20px;
+        }
+        .task label input{
+          margin-top: 4px;
+        }
+      }</style>
+        <script>const taskInput = document.querySelector(".task-input input"),
+          filters = document.querySelectorAll(".filters span"),
+          clearAll = document.querySelector(".clear-btn"),
+          taskBox = document.querySelector(".task-box");
+          
+          let editId,
+          isEditTask = false,
+          todos = JSON.parse(localStorage.getItem("todo-list"));
+          
+          filters.forEach(btn => {
+              btn.addEventListener("click", () => {
+                  document.querySelector("span.active").classList.remove("active");
+                  btn.classList.add("active");
+                  showTodo(btn.id);
+              });
+          });
+          
+          function showTodo(filter) {
+              let liTag = "";
+              if(todos) {
+                  todos.forEach((todo, id) => {
+                      let completed = todo.status == "completed" ? "checked" : "";
+                      if(filter == todo.status || filter == "all") {
+                          liTag += `<li class="task">
+                                      <label for="${id}">
+                                          <input onclick="updateStatus(this)" type="checkbox" id="${id}" ${completed}>
+                                          <p class="${completed}">${todo.name}</p>
+                                      </label>
+                                      <div class="settings">
+                                          <i onclick="showMenu(this)" class="uil uil-ellipsis-h"></i>
+                                          <ul class="task-menu">
+                                              <li onclick='editTask(${id}, "${todo.name}")'><i class="uil uil-pen"></i>Edit</li>
+                                              <li onclick='deleteTask(${id}, "${filter}")'><i class="uil uil-trash"></i>Delete</li>
+                                          </ul>
+                                      </div>
+                                  </li>`;
+                      }
+                  });
+              }
+              taskBox.innerHTML = liTag || `<span>You don't have any task here</span>`;
+              let checkTask = taskBox.querySelectorAll(".task");
+              !checkTask.length ? clearAll.classList.remove("active") : clearAll.classList.add("active");
+              taskBox.offsetHeight >= 300 ? taskBox.classList.add("overflow") : taskBox.classList.remove("overflow");
+          }
+          showTodo("all");
+          
+          function showMenu(selectedTask) {
+              let menuDiv = selectedTask.parentElement.lastElementChild;
+              menuDiv.classList.add("show");
+              document.addEventListener("click", e => {
+                  if(e.target.tagName != "I" || e.target != selectedTask) {
+                      menuDiv.classList.remove("show");
+                  }
+              });
+          }
+          
+          function updateStatus(selectedTask) {
+              let taskName = selectedTask.parentElement.lastElementChild;
+              if(selectedTask.checked) {
+                  taskName.classList.add("checked");
+                  todos[selectedTask.id].status = "completed";
+              } else {
+                  taskName.classList.remove("checked");
+                  todos[selectedTask.id].status = "pending";
+              }
+              localStorage.setItem("todo-list", JSON.stringify(todos))
+          }
+          
+          function editTask(taskId, textName) {
+              editId = taskId;
+              isEditTask = true;
+              taskInput.value = textName;
+              taskInput.focus();
+              taskInput.classList.add("active");
+          }
+          
+          function deleteTask(deleteId, filter) {
+              isEditTask = false;
+              todos.splice(deleteId, 1);
+              localStorage.setItem("todo-list", JSON.stringify(todos));
+              showTodo(filter);
+          }
+          
+          clearAll.addEventListener("click", () => {
+              isEditTask = false;
+              todos.splice(0, todos.length);
+              localStorage.setItem("todo-list", JSON.stringify(todos));
+              showTodo()
+          });
+          
+          taskInput.addEventListener("keyup", e => {
+              let userTask = taskInput.value.trim();
+              if(e.key == "Enter" && userTask) {
+                  if(!isEditTask) {
+                      todos = !todos ? [] : todos;
+                      let taskInfo = {name: userTask, status: "pending"};
+                      todos.push(taskInfo);
+                  } else {
+                      isEditTask = false;
+                      todos[editId].name = userTask;
+                  }
+                  taskInput.value = "";
+                  localStorage.setItem("todo-list", JSON.stringify(todos));
+                  showTodo(document.querySelector("span.active").id);
+              }
+          });</script>
+    <div class="wrapper , header">
+      <div class="task-input">
+        <img src="bars-icon.svg" alt="icon">
+        <input type="text" placeholder="Add a new task">
+      </div>
+      <div class="controls">
+        <div class="filters">
+          <span class="active" id="all">All</span>
+          <span id="pending">Pending</span>
+          <span id="completed">Completed</span>
+        </div>
+        <button class="clear-btn">Clear All</button>
+      </div>
+      <ul class="task-box"></ul>
+    </div>
+</div>
+    
+<!-- header section starts  -->
+
+<header class="header">
+
+    <div id="menu-btn" class="fas fa-bars"></div>
+
+    <a data-aos="zoom-in-left" data-aos-delay="150" href="#" class="logo"> <i class="fas fa-paper-plane"></i>BrookX3.0 <span style="font-size: 1rem;">Pro</span> </a>
+
+    <nav class="navbar">
+        <a data-aos="zoom-in-left" data-aos-delay="300" href="#home">home</a>
+        <a data-aos="zoom-in-left" data-aos-delay="450" href="#about">about</a>
+        <a data-aos="zoom-in-left" data-aos-delay="600" href="#products">products</a>
+        <a data-aos="zoom-in-left" data-aos-delay="750" href="#services">services</a>
+        <a data-aos="zoom-in-left" data-aos-delay="900" href="#gallery">gallery</a>
+        <a data-aos="zoom-in-left" data-aos-delay="1150" href="#blogs">blogs</a>
+        <a data-aos="zoom-in-left" id="todo" data-aos-delay="1150" >ToDo</a>
+        
+    </nav>
+
+    <a data-aos="zoom-in-left" data-aos-delay="1300" href="#book-form" class="btn">Explore</a>
+
+</header>
+
+<!-- header section ends -->
+
+<!-- home section starts  -->
+
+<section class="home" id="home">
+
+    <div class="content">
+        <span data-aos="fade-up" data-aos-delay="150">Welcome to</span>
+        <h3 data-aos="fade-up" data-aos-delay="300"><h1 data-aos="fade-up" data-aos-delay="300" class="title">
+            BrookX 3.0 Pro
+            <div class="aurora">
+              <div class="aurora__item"></div>
+              <div class="aurora__item"></div>
+              <div class="aurora__item"></div>
+              <div class="aurora__item"></div>
+            </div>
+          </h1>
+          </h3>
+        <p data-aos="fade-up" data-aos-delay="450">Multi tasking service app that can be used for almost anything.</p>
+        <a data-aos="fade-up" data-aos-delay="600" href="#products" class="btn">Explore</a>
+    </div>
+
+</section>
+
+<!-- home section ends -->
+
+<!-- booking form section starts  -->
+
+<section class="book-form" id="book-form">
+
+    <div class="book">
+        <button  id="increment-btn" class="btn2"><i class="fas fa-arrow-circle-down"> </i><span> Download v1.02 !</span></button>
+        <button style="margin-left: 20px; "  id="increment-btn" class="btn2"><i class="fas fa-bell"></i><span> Comunity !</span></button><br><br>
+        <span id="count-display">0</span><span> Downloads</span>
+      </div>
+
+</section>
+
+<!-- booking form section ends -->
+
+<!-- about section starts  -->
+
+<section class="about" id="about">
+
+    <div class="video-container" data-aos="fade-right" data-aos-delay="300">
+        <video src="images/about-vid-1.mp4" muted autoplay loop class="video"></video>
+        <div class="controls">
+            <span class="control-btn" data-src="images/about-vid-1.mp4"></span>
+            <span class="control-btn" data-src="images/about-vid-2.mp4"></span>
+            <span class="control-btn" data-src="images/about-vid-3.mp4"></span>
+        </div>
+    </div>
+
+    <div class="content" data-aos="fade-left" data-aos-delay="600">
+        <span>why choose us?</span>
+        <h3>End less opportunities</h3>
+        <p>Make your own lifestyle and be smart. We have many diferent app and they are all free.</p>
+        <a href="#products" class="btn">read more</a>
+    </div>
+
+</section>
+
+<!-- about section ends -->
+
+<!-- products section starts  -->
+
+<section class="products" id="products">
+
+    <div class="heading">
+        <span>our products</span>
+        <h1>make your life smart and easy</h1>
+    </div>
+
+    <div class="box-container">
+
+        <div class="box" data-aos="fade-up" data-aos-delay="150">
+            <div class="image">
+                <img src="images/des-1.jpg" alt="">
+            </div>
+            <div class="content">
+                <h3>Task Manager app</h3>
+                <p>THis app alows you to manage your time in a easier way and keep in mind all the things you have to do.</p>
+                <a href="/dist/TaskManager/TaskManager.html">read more <i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+
+        <div class="box" data-aos="fade-up" data-aos-delay="300">
+            <div class="image">
+                <img src="images/des-2.jpg" alt="">
+            </div>
+            <div class="content">
+                <h3>Password Generator</h3>
+                <p>Create a 8 to 32 digit password including symbols , numbers and letters. The passwords are made randomly.</p>
+                <a href="#">read more <i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+
+        <div class="box" data-aos="fade-up" data-aos-delay="450">
+            <div class="image">
+                <img src="images/des-3.jpg" alt="">
+            </div>
+            <div class="content">
+                <h3>Code Playground</h3>
+                <p>This app alow you to code and make simple app in the browser without downloading any program.</p>
+                <a href="#">read more <i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+
+        <div class="box" data-aos="fade-up" data-aos-delay="600">
+            <div class="image">
+                <img src="images/des-4.jpg" alt="">
+            </div>
+            <div class="content">
+                <h3>Web desing</h3>
+                <p>Here you'll find some templates and sketch to make your own website in a easier way with some incredible desings.</p>
+                <a href="#">read more <i class="fas fa-angle-right"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- products section ends -->
+
+<!-- services section starts  -->
+
+<section class="services" id="services">
+
+    <div class="heading">
+        <span>our services</span>
+        <h1>countless expericences</h1>
+    </div>
+
+    <div class="box-container">
+
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="150">
+            <i class="fas fa-globe"></i>
+            <h3>Security</h3>
+            <p>All the data that's recopilated while using our apps and software is used just to inprove the user experience and make customization tasks.</p>
+        </div>
+
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="150">
+            <i class="fas fa-hiking"></i>
+            <h3>Development</h3>
+            <p>We spend all the time we can making our apps more advanced and solving bugs to make the best user experience possible.</p>
+        </div>
+
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="150">
+            <i class="fas fa-plane"></i>
+            <h3>Network</h3>
+            <p>We work very hard to achieve the fastest network and loading times in our apps to make the user have a smooth and easy navigation.</p>
+        </div>
+
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="150">
+            <i class="fas fa-wallet"></i>
+            <h3>affordable price</h3>
+            <p>All the apps and software that we have is cheap and easy to use. We don't have any huge prices and we try to make cheap products without losing quality</p>
+        </div>
+
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="150">
+            <i class="fas fa-headset"></i>
+            <h3>24/7 support</h3>
+            <p>We have a discord comunity that is 24/7 ready to solve any problem that you have. We also have one contact form to make user be able to report eny bug in our apps.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- services section ends -->
+
+<!-- gallery section starts  -->
+
+<section class="gallery" id="gallery">
+
+    <div class="heading">
+        <span>our gallery</span>
+        <h1>we record memories</h1>
+    </div>
+    
+    <div class="box-container">
+
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="150">
+            <img src="images/gallery-img-1.jpg" alt="">
+            <span>travel spot</span>
+            <h3>iceland</h3>
+        </div>
+
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="300">
+            <img src="images/gallery-img-2.jpg" alt="">
+            <span>travel spot</span>
+            <h3>greenland</h3>
+        </div>
+
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="450">
+            <img src="images/gallery-img-3.jpg" alt="">
+            <span>travel spot</span>
+            <h3>alaska</h3>
+        </div>
+
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="150">
+            <img src="images/gallery-img-4.jpg" alt="">
+            <span>travel spot</span>
+            <h3>thailand</h3>
+        </div>
+
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="300">
+            <img src="images/gallery-img-5.jpg" alt="">
+            <span>travel spot</span>
+            <h3>brazil</h3>
+        </div>
+
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="450">
+            <img src="images/gallery-img-6.jpg" alt="">
+            <span>travel spot</span>
+            <h3>maldive</h3>
+        </div>
+
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="150">
+            <img src="images/gallery-img-7.jpg" alt="">
+            <span>travel spot</span>
+            <h3>iceland</h3>
+        </div>
+
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="300">
+            <img src="images/gallery-img-8.jpg" alt="">
+            <span>travel spot</span>
+            <h3>alaska</h3>
+        </div>
+
+        <div class="box" data-aos="zoom-in-up" data-aos-delay="450">
+            <img src="images/gallery-img-9.jpg" alt="">
+            <span>travel spot</span>
+            <h3>maldive</h3>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- gallery section ends -->
+
+<!-- review section starts  -->
+
+<section class="review">
+
+    <div class="content" data-aos="fade-right" data-aos-delay="300">
+        <span>testimonials</span>
+        <h3>good news from our clients</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda laudantium corporis fugiat quae unde perspiciatis similique ab modi enim consequatur aperiam cumque distinctio facilis sit, debitis possimus asperiores non harum.</p>
+    </div>
+
+    <div class="box-container" data-aos="fade-left" data-aos-delay="600">
+
+        <div class="box">
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia, ratione.</p>
+            <div class="user">
+                <img src="images/pic-1.png" alt="">
+                <div class="info">
+                    <h3>john deo</h3>
+                    <span>designer</span>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia, ratione.</p>
+            <div class="user">
+                <img src="images/pic-2.png" alt="">
+                <div class="info">
+                    <h3>john deo</h3>
+                    <span>designer</span>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia, ratione.</p>
+            <div class="user">
+                <img src="images/pic-3.png" alt="">
+                <div class="info">
+                    <h3>john deo</h3>
+                    <span>designer</span>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia, ratione.</p>
+            <div class="user">
+                <img src="images/pic-4.png" alt="">
+                <div class="info">
+                    <h3>john deo</h3>
+                    <span>designer</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- review section ends -->
+
+<!-- blogs section starts  -->
+
+<section class="blogs" id="blogs">
+
+    <div class="heading">
+        <span>blogs & posts</span>
+        <h1>we untold stories</h1>
+    </div>
+
+    <div class="box-container">
+
+        <div class="box" data-aos="fade-up" data-aos-delay="150">
+            <div class="image">
+                <img src="images/blog-1.jpg" alt="">
+            </div>
+            <div class="content">
+                <a href="#" class="link">Life is a journey, not a products</a>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, natus!</p>
+                <div class="icon">
+                    <a href="#"><i class="fas fa-clock"></i> 21st may, 2021</a>
+                    <a href="#"><i class="fas fa-user"></i> by admin</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="box" data-aos="fade-up" data-aos-delay="300">
+            <div class="image">
+                <img src="images/blog-2.jpg" alt="">
+            </div>
+            <div class="content">
+                <a href="#" class="link">Life is a journey, not a products</a>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, natus!</p>
+                <div class="icon">
+                    <a href="#"><i class="fas fa-clock"></i> 21st may, 2021</a>
+                    <a href="#"><i class="fas fa-user"></i> by admin</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="box" data-aos="fade-up" data-aos-delay="450">
+            <div class="image">
+                <img src="images/blog-3.jpg" alt="">
+            </div>
+            <div class="content">
+                <a href="#" class="link">Life is a journey, not a products</a>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, natus!</p>
+                <div class="icon">
+                    <a href="#"><i class="fas fa-clock"></i> 21st may, 2021</a>
+                    <a href="#"><i class="fas fa-user"></i> by admin</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- blogs section ends -->
+
+<!-- banner section starts  -->
+
+<div class="banner">
+
+    <div class="content" data-aos="zoom-in-up" data-aos-delay="300">
+        <span>start your adventures</span>
+        <h3>Let's Explore This World</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum voluptatum praesentium amet quibusdam quam officia suscipit odio.</p>
+        <a href="#book-form" class="btn">book now</a>
+    </div>
+
+</div>
+
+<!-- banner section ends -->
+
+<!-- footer section starts  -->
+
+<section class="footer">
+
+    <div class="box-container">
+
+        <div class="box" data-aos="fade-up" data-aos-delay="150">
+            <a href="#" class="logo"> <i class="fas fa-paper-plane"></i>travel </a>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati, ad?</p>
+            <div class="share">
+                <a href="#" class="fab fa-facebook-f"></a>
+                <a href="#" class="fab fa-twitter"></a>
+                <a href="#" class="fab fa-instagram"></a>
+                <a href="#" class="fab fa-linkedin"></a>
+            </div>
+        </div>
+
+        <div class="box" data-aos="fade-up" data-aos-delay="300">
+            <h3>quick links</h3>
+            <a href="#home" class="links"> <i class="fas fa-arrow-right"></i> home </a>
+            <a href="#about" class="links"> <i class="fas fa-arrow-right"></i> about </a>
+            <a href="#products" class="links"> <i class="fas fa-arrow-right"></i> products </a>
+            <a href="#services" class="links"> <i class="fas fa-arrow-right"></i> services </a>
+            <a href="#gallery" class="links"> <i class="fas fa-arrow-right"></i> gallery </a>
+            <a href="#blogs" class="links"> <i class="fas fa-arrow-right"></i> blogs </a>
+        </div>
+
+        <div class="box" data-aos="fade-up" data-aos-delay="450">
+            <h3>contact info</h3>
+            <p> <i class="fas fa-map"></i> mumbai, india </p>
+            <p> <i class="fas fa-phone"></i> +123-456-7890 </p>
+            <p> <i class="fas fa-envelope"></i> shaikhanas@gmail.com </p>
+            <p> <i class="fas fa-clock"></i> 7:00am - 10:00pm </p>
+        </div>
+
+        <div class="box" data-aos="fade-up" data-aos-delay="600">
+            <h3>newsletter</h3>
+            <p>subscribe for latest updates</p>
+            <form action="">
+                <input type="email" name="" placeholder="enter your email" class="email" id="">
+                <input type="submit" value="subscribe" class="btn">
+            </form>
+        </div>
+
+    </div>
+
+</section>
+
+<div class="credit">created by <span>mr. web designer</span> | all rights reserved!</div>
+
+<!-- footer section ends -->
+
+
+
+<!-- Add Firebase scripts -->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+<!-- Add jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+  // Initialize Firebase
+  var firebaseConfig = {
+    apiKey: "AIzaSyCN4KB82aEF-f1jQsu_41Os_QcMH9EAqhA",
+    authDomain: "brookx3-73468.firebaseapp.com",
+    databaseURL: "https://brookx3-73468-default-rtdb.firebaseio.com",
+    projectId: "brookx3-73468",
+    storageBucket: "brookx3-73468.appspot.com",
+    messagingSenderId: "1004382599882",
+    appId: "1:1004382599882:web:ddc82414810326d2855233"
+  };
+  firebase.initializeApp(firebaseConfig);
+
+  // Get a reference to the database service
+  var database = firebase.database();
+
+  // Get a reference to the counter node in the database
+  var counterRef = database.ref('counter');
+
+  // Get a reference to the HTML elements
+  var countDisplay = $('#count-display');
+  var incrementBtn = $('#increment-btn');
+
+  // Check local storage for the 'animationPlayed' flag
+  if (!localStorage.getItem('animationPlayed')) {
+    // Set the 'animationPlayed' flag to true and play the animation
+    localStorage.setItem('animationPlayed', 'false');
+
+    // Display the current count and animate the count increase from 0 to the current value
+    counterRef.once('value', function (snapshot) {
+      var count = snapshot.val();
+      countDisplay.prop('Counter', 0).animate({ Counter: count }, {
+        duration: 2000,
+        easing: 'swing',
+        step: function (now) {
+            countDisplay.text(Math.ceil(now));
+        }
+      }).delay(2000).queue(function () {
+        // Cancel the animation loop after 2 seconds
+        $(this).stop();
+        $(this).clearQueue();
+      });
+    });
+  }
+
+  // Always update the count when there are changes
+  counterRef.on('value', function (snapshot) {
+    var count = snapshot.val();
+    countDisplay.text(count);
+  });
+
+  // Increment the count when the button is clicked
+  incrementBtn.on('click', function () {
+    counterRef.transaction(function (count) {
+      if (count === null) {
+        return 1;
+      } else {
+        return count + 1;
+      }
+    });
+  });
+
+  // Reset the 'animationPlayed' flag when the page is loaded
+  $(window).on('load', function () {
+    localStorage.removeItem('animationPlayed');
+  });
+
+
+</script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+<script>
+
+    AOS.init({
+        duration: 800,
+        offset:150,
+    });
+
+</script>
+
+</body>
+</html>
